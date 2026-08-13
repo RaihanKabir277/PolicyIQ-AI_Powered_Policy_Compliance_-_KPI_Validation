@@ -638,6 +638,9 @@ conversational assistant.
 
 ## Page 1 --- Compliance Overview
 
+![Compliance Overview Dashboard](Output_Picture/compiliance.jpg)
+
+
 **Purpose:** Provide an executive and operational view of current policy
 compliance.
 
@@ -662,6 +665,9 @@ than a restatement of an AI chat response.
 ------------------------------------------------------------------------
 
 ## Page 2 --- Policy & KPI Reference
+
+![Compliance Overview Dashboard](Output_Picture/compiliance.jpg)
+
 
 **Purpose:** Provide a verification surface for the claims made by the
 AI Assistant.
