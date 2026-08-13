@@ -1,0 +1,978 @@
+{
+  "datasets": [
+    {
+      "name": "violations_by_domain",
+      "displayName": "Violations by Domain",
+      "queryLines": [
+        "SELECT\n",
+        "  policy_domain,\n",
+        "  COUNT(*) AS violation_count\n",
+        "FROM\n",
+        "  policyiq.silver.kpi_compliance_facts\n",
+        "WHERE\n",
+        "  is_compliant = FALSE\n",
+        "GROUP BY\n",
+        "  policy_domain\n",
+        "ORDER BY\n",
+        "  violation_count DESC"
+      ],
+      "catalog": "policyiq",
+      "schema": "silver"
+    },
+    {
+      "name": "cca9474f",
+      "displayName": "compliance_overview",
+      "queryLines": [
+        "SELECT\n",
+        "  branch_id, branch_name, division, region_risk_classification,\n",
+        "  policy_domain, kpi_display_name, policy_id, policy_section_ref,\n",
+        "  actual_value, threshold_value, threshold_operator, unit,\n",
+        "  compliance_status, raw_gap, as_of_date\n",
+        "FROM policyiq.silver.kpi_compliance_facts"
+      ]
+    },
+    {
+      "name": "d4f21861",
+      "displayName": "violations_by_branch",
+      "queryLines": [
+        "SELECT branch_name, count(*) AS violation_count\n",
+        "FROM policyiq.silver.kpi_compliance_facts\n",
+        "WHERE compliance_status = 'Non-Compliant'\n",
+        "GROUP BY branch_name"
+      ]
+    },
+    {
+      "name": "2545bf6c",
+      "displayName": "Untitled dataset",
+      "queryLines": [
+        ""
+      ]
+    },
+    {
+      "name": "overall_compliance_rate",
+      "displayName": "Overall Compliance Rate",
+      "queryLines": [
+        "SELECT\n",
+        "  ROUND(\n",
+        "    SUM(\n",
+        "      CASE\n",
+        "        WHEN compliance_status = 'Compliant' THEN 1\n",
+        "        ELSE 0\n",
+        "      END\n",
+        "    )\n",
+        "      * 100.0\n",
+        "      / COUNT(*),\n",
+        "    1\n",
+        "  ) AS compliance_rate_pct\n",
+        "FROM\n",
+        "  policyiq.silver.kpi_compliance_facts"
+      ]
+    },
+    {
+      "name": "034b82d1",
+      "displayName": "policy_registry_view",
+      "queryLines": [
+        "-- policy_registry_view\n",
+        "SELECT policy_name, policy_domain, issuing_authority, version, effective_date, is_synthetic\n",
+        "FROM policyiq.bronze.policy_registry\n",
+        "ORDER BY is_synthetic ASC, policy_domain"
+      ]
+    },
+    {
+      "name": "223cd337",
+      "displayName": "kpi_registry_view",
+      "queryLines": [
+        "-- kpi_registry_view\n",
+        "SELECT kpi_display_name, policy_domain, policy_section_ref, unit, threshold_operator, threshold_value, notes\n",
+        "FROM policyiq.bronze.kpi_registry\n",
+        "ORDER BY policy_domain, kpi_display_name"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "bd002e3f",
+      "displayName": "Compliance Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "violations_by_domain",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "violations_by_domain",
+                  "fields": [
+                    {
+                      "name": "policy_domain",
+                      "expression": "`policy_domain`"
+                    },
+                    {
+                      "name": "sum(violation_count)",
+                      "expression": "SUM(`violation_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Violations by Policy Domain",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "policy_domain",
+                  "displayName": "policy_domain",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(violation_count)",
+                  "displayName": "violation_count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "policy_domain",
+                  "displayName": "policy_domain",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "total-kpis-tracked",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cca9474f",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total KPIs tracked"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(*)",
+                  "style": {
+                    "fontColor": {
+                      "themeColorType": "visualizationColors",
+                      "position": 3
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "tota1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cca9474f",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`compliance_status` IN ('Compliant')"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total compliance"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(*)",
+                  "style": {
+                    "fontColor": {
+                      "themeColorType": "visualizationColors",
+                      "position": 3
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total-violations",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cca9474f",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`compliance_status` IN ('Non-Compliant')"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total violations"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(*)",
+                  "style": {
+                    "fontColor": {
+                      "themeColorType": "visualizationColors",
+                      "position": 3
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "compliance_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "overall_compliance_rate",
+                  "fields": [
+                    {
+                      "name": "compliance_rate_pct",
+                      "expression": "`compliance_rate_pct`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Overall Compliance Rate"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "compliance_rate_pct",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "none",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 1
+                    }
+                  },
+                  "formatTemplate": "{{ @formatted }}%",
+                  "style": {
+                    "fontColor": {
+                      "themeColorType": "visualizationColors",
+                      "position": 3
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "violations-by-branch",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d4f21861",
+                  "fields": [
+                    {
+                      "name": "branch_name",
+                      "expression": "`branch_name`"
+                    },
+                    {
+                      "name": "sum(violation_count)",
+                      "expression": "SUM(`violation_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Violations by Branch"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "branch_name",
+                  "displayName": "Branch Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(violation_count)",
+                  "displayName": "Violation Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "branch_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "violations-policy-domain",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "violations_by_domain",
+                  "fields": [
+                    {
+                      "name": "sum(violation_count)",
+                      "expression": "SUM(`violation_count`)"
+                    },
+                    {
+                      "name": "policy_domain",
+                      "expression": "`policy_domain`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Violations by Policy Domain"
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(violation_count)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "policy_domain",
+                  "displayName": "Policy Domain",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 9,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "compliance1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cca9474f",
+                  "fields": [
+                    {
+                      "name": "branch_name",
+                      "expression": "`branch_name`"
+                    },
+                    {
+                      "name": "policy_domain",
+                      "expression": "`policy_domain`"
+                    },
+                    {
+                      "name": "kpi_display_name",
+                      "expression": "`kpi_display_name`"
+                    },
+                    {
+                      "name": "actual_value",
+                      "expression": "`actual_value`"
+                    },
+                    {
+                      "name": "threshold_value",
+                      "expression": "`threshold_value`"
+                    },
+                    {
+                      "name": "unit",
+                      "expression": "`unit`"
+                    },
+                    {
+                      "name": "compliance_status",
+                      "expression": "`compliance_status`"
+                    },
+                    {
+                      "name": "raw_gap",
+                      "expression": "`raw_gap`"
+                    },
+                    {
+                      "name": "policy_section_ref",
+                      "expression": "`policy_section_ref`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "compliance Detail table"
+              },
+              "bandedRows": {
+                "enabled": true
+              },
+              "headerStyle": {
+                "backgroundColor": {
+                  "themeColorType": "visualizationColors",
+                  "position": 6
+                }
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "branch_name",
+                    "displayName": "Branch Name"
+                  },
+                  {
+                    "fieldName": "policy_domain",
+                    "displayName": "Policy Name"
+                  },
+                  {
+                    "fieldName": "kpi_display_name",
+                    "displayName": "KPI"
+                  },
+                  {
+                    "fieldName": "actual_value",
+                    "contentAlignment": "left",
+                    "displayName": "Actual Value"
+                  },
+                  {
+                    "fieldName": "threshold_value",
+                    "contentAlignment": "left",
+                    "displayName": "Thresold Value"
+                  },
+                  {
+                    "fieldName": "unit"
+                  },
+                  {
+                    "fieldName": "compliance_status",
+                    "displayName": "Status",
+                    "style": {
+                      "type": "basic",
+                      "rules": [
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Compliant"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": "#00A972"
+                        },
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "Non-Compliant"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": {
+                            "themeColorType": "visualizationColors",
+                            "position": 4
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "fieldName": "raw_gap",
+                    "contentAlignment": "left",
+                    "displayName": "GAP"
+                  },
+                  {
+                    "fieldName": "policy_section_ref",
+                    "displayName": "Policy Refrence"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 16,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "select-status",
+            "queries": [
+              {
+                "name": "dashboards/01f1962f60e513da8fd32c28cc388804/datasets/01f19631194d1cfbb3916b2345d06cb2_compliance_status",
+                "query": {
+                  "datasetName": "cca9474f",
+                  "fields": [
+                    {
+                      "name": "compliance_status",
+                      "expression": "`compliance_status`"
+                    },
+                    {
+                      "name": "compliance_status_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Select Status",
+                "headerAlignment": "center"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "compliance_status",
+                    "queryName": "dashboards/01f1962f60e513da8fd32c28cc388804/datasets/01f19631194d1cfbb3916b2345d06cb2_compliance_status"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 12,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "ee11b456",
+      "displayName": "Policy & KPI Reference",
+      "layout": [
+        {
+          "widget": {
+            "name": "source-policy-documents",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "034b82d1",
+                  "fields": [
+                    {
+                      "name": "policy_name",
+                      "expression": "`policy_name`"
+                    },
+                    {
+                      "name": "policy_domain",
+                      "expression": "`policy_domain`"
+                    },
+                    {
+                      "name": "issuing_authority",
+                      "expression": "`issuing_authority`"
+                    },
+                    {
+                      "name": "effective_date",
+                      "expression": "`effective_date`"
+                    },
+                    {
+                      "name": "is_synthetic",
+                      "expression": "`is_synthetic`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Source Policy Documents"
+              },
+              "bandedRows": {
+                "enabled": true
+              },
+              "headerStyle": {
+                "backgroundColor": {
+                  "themeColorType": "visualizationColors",
+                  "position": 6
+                }
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "policy_name",
+                    "displayName": "Policy Name"
+                  },
+                  {
+                    "fieldName": "policy_domain",
+                    "displayName": "Domain"
+                  },
+                  {
+                    "fieldName": "issuing_authority",
+                    "displayName": "Authority "
+                  },
+                  {
+                    "fieldName": "effective_date",
+                    "displayName": "Effective Date"
+                  },
+                  {
+                    "fieldName": "is_synthetic",
+                    "displayName": "Synthetic",
+                    "style": {
+                      "type": "basic",
+                      "rules": [
+                        {
+                          "condition": {
+                            "operand": {
+                              "type": "data-value",
+                              "value": "true"
+                            },
+                            "operator": "="
+                          },
+                          "backgroundColor": "#00A972"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "all-tracked-kpis-and-thresholds",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "223cd337",
+                  "fields": [
+                    {
+                      "name": "policy_domain",
+                      "expression": "`policy_domain`"
+                    },
+                    {
+                      "name": "kpi_display_name",
+                      "expression": "`kpi_display_name`"
+                    },
+                    {
+                      "name": "policy_section_ref",
+                      "expression": "`policy_section_ref`"
+                    },
+                    {
+                      "name": "threshold_value",
+                      "expression": "`threshold_value`"
+                    },
+                    {
+                      "name": "unit",
+                      "expression": "`unit`"
+                    },
+                    {
+                      "name": "notes",
+                      "expression": "`notes`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "All Tracked KPIs and Thresholds"
+              },
+              "bandedRows": {
+                "enabled": true
+              },
+              "headerStyle": {
+                "backgroundColor": {
+                  "themeColorType": "visualizationColors",
+                  "position": 6
+                }
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "policy_domain",
+                    "displayName": "Policy "
+                  },
+                  {
+                    "fieldName": "kpi_display_name",
+                    "displayName": "KPI"
+                  },
+                  {
+                    "fieldName": "policy_section_ref",
+                    "displayName": "Policy Refrence"
+                  },
+                  {
+                    "fieldName": "threshold_value",
+                    "contentAlignment": "left",
+                    "displayName": "Thresold Value"
+                  },
+                  {
+                    "fieldName": "unit"
+                  },
+                  {
+                    "fieldName": "notes",
+                    "displayName": "Threshold Derivation"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#FAFAFB",
+        "dark": "#1F272D"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#11171C"
+      },
+      "fontColor": {
+        "light": "#11171C",
+        "dark": "#E8ECF0"
+      },
+      "selectionColor": {
+        "light": "#2272B4",
+        "dark": "#8ACAFF"
+      },
+      "widgetHeaderAlignment": "CENTER",
+      "widgetPadding": 8,
+      "widgetMargin": 12,
+      "widgetCornerRadius": 12,
+      "widgetShadow": 100
+    },
+    "applyModeEnabled": false
+  }
+}
