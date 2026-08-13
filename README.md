@@ -13,6 +13,14 @@
 
 </div>
 
+## Links
+
+- **Live AI Assistant:** https://agent-policy-analytics-7474654242294589.aws.databricksapps.com
+- **AI/BI Dashboard:** https://dbc-14b24849-51f2.cloud.databricks.com/dashboardsv3/01f1962f60e513da8fd32c28cc388804/published?o=7474654242294589
+
+---
+
+
 ------------------------------------------------------------------------
 
 ## What is PolicyIQ?
