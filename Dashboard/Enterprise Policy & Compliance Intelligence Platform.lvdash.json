@@ -160,7 +160,7 @@
           },
           "position": {
             "x": 0,
-            "y": 9,
+            "y": 11,
             "width": 6,
             "height": 6
           }
@@ -213,7 +213,7 @@
           },
           "position": {
             "x": 0,
-            "y": 0,
+            "y": 2,
             "width": 3,
             "height": 3
           }
@@ -271,7 +271,7 @@
           },
           "position": {
             "x": 3,
-            "y": 0,
+            "y": 2,
             "width": 3,
             "height": 3
           }
@@ -329,7 +329,7 @@
           },
           "position": {
             "x": 6,
-            "y": 0,
+            "y": 2,
             "width": 3,
             "height": 3
           }
@@ -391,7 +391,7 @@
           },
           "position": {
             "x": 9,
-            "y": 0,
+            "y": 2,
             "width": 3,
             "height": 3
           }
@@ -459,7 +459,7 @@
           },
           "position": {
             "x": 0,
-            "y": 3,
+            "y": 5,
             "width": 12,
             "height": 6
           }
@@ -523,7 +523,7 @@
           },
           "position": {
             "x": 6,
-            "y": 9,
+            "y": 11,
             "width": 6,
             "height": 6
           }
@@ -676,7 +676,7 @@
           },
           "position": {
             "x": 0,
-            "y": 16,
+            "y": 18,
             "width": 12,
             "height": 6
           }
@@ -728,9 +728,35 @@
           },
           "position": {
             "x": 0,
-            "y": 15,
+            "y": 17,
             "width": 12,
             "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "51130749",
+            "multilineTextboxSpec": {
+              "lines": [
+                "### <span style=\"text-align:center;display:block\"><span style=\"color:#00A972\">PolicyIQ AI Assistant</span></span>\n",
+                "\n",
+                "#### <span style=\"text-align:center;display:block\">Ask any question about branch KPI compliance, policy thresholds, or violations in plain English</span>\n",
+                "\n",
+                "<span style=\"text-align:center;display:block;\">[Open a New Tab](https://agent-policy-analytics-7474654242294589.aws.databricksapps.com)</span>"
+              ],
+              "verticalAlign": "VERTICAL_ALIGN_CENTER"
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
           }
         }
       ],
@@ -974,6 +1000,11 @@
       "widgetMargin": 12,
       "widgetCornerRadius": 12,
       "widgetShadow": 100
+    },
+    "genieSpace": {
+      "isEnabled": true,
+      "overrideId": "01f195414bc41c4eb11e10ee8d282c19",
+      "enablementMode": "ENABLED"
     },
     "applyModeEnabled": false
   }
