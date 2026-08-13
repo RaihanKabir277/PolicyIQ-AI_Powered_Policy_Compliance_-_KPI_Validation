@@ -1187,7 +1187,7 @@ Application Engineering
 # Author
 
 **Raihan Kabir**\
-Associate Data Engineer · Zylo
+Junior Data Engineer · Zylo
 
 [![Email](https://img.shields.io/badge/Email-raihank0192%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:raihank0192@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Raihan%20Kabir-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/raihan-kabir218)
@@ -1201,14 +1201,6 @@ Associate Data Engineer · Zylo
 - 🏆 **Cloudera Technical Expert Accreditation** — Cloudera Partner Network (Feb 2026 – Feb 2028)
 
 ---
-
-<div align="center">
-
-*Built with Databricks · Delta Lake · Unity Catalog · AI Search · Genie · OpenAI Agents SDK*
-
-*Enterprise Policy & Compliance Intelligence — from policy text to auditable KPI decisions.*
-
-</div>
 
 Designed, built, debugged and iteratively hardened the PolicyIQ platform
 end-to-end --- from source document ingestion and Unity Catalog
@@ -1238,5 +1230,12 @@ Trace it back to the source.
 
 ------------------------------------------------------------------------
 
+<div align="center">
+
+*Built with Databricks · Delta Lake · Unity Catalog · AI Search · Genie · OpenAI Agents SDK*
+
+*Enterprise Policy & Compliance Intelligence — from policy text to auditable KPI decisions.*
+
+</div>
 
 
