@@ -1216,11 +1216,30 @@ Trace it back to the source.
 ```
 
 ------------------------------------------------------------------------
+---
 
-::: {align="center"}
-**Built with Databricks · Delta Lake · Unity Catalog · AI Search · Genie
-· OpenAI Agents SDK**
+## Author
 
-*Enterprise Policy & Compliance Intelligence --- from policy text to
-auditable KPI decisions.*
-:::
+**Raihan Kabir**
+Data Engineering · Machine Learning
+
+[![Email](https://img.shields.io/badge/Email-raihank0192%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:raihank0192@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Raihan%20Kabir-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/raihan-kabir218)
+[![GitHub](https://img.shields.io/badge/GitHub-RaihanKabir277-181717?style=flat&logo=github&logoColor=white)](https://github.com/RaihanKabir277)
+
+---
+
+## Certifications
+
+- 🏆 **Databricks Accredited Data Engineer Associate** — Databricks Academy (April 2026)
+- 🏆 **Cloudera Technical Expert Accreditation** — Cloudera Partner Network (Feb 2026 – Feb 2028)
+
+---
+
+<div align="center">
+
+*Built with Databricks · Delta Lake · Unity Catalog · AI Search · Genie · OpenAI Agents SDK*
+
+*Enterprise Policy & Compliance Intelligence — from policy text to auditable KPI decisions.*
+
+</div>
