@@ -710,6 +710,7 @@
                 "title": "Select Status",
                 "headerAlignment": "center"
               },
+              "disallowAll": false,
               "widgetType": "filter-single-select",
               "encodings": {
                 "fields": [
