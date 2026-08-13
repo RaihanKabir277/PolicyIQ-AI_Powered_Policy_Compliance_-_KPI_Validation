@@ -126,24 +126,26 @@
               "encodings": {
                 "x": {
                   "fieldName": "policy_domain",
-                  "displayName": "policy_domain",
+                  "displayName": "Policy",
                   "scale": {
                     "type": "categorical"
                   }
                 },
                 "y": {
                   "fieldName": "sum(violation_count)",
-                  "displayName": "violation_count",
+                  "displayName": "Violation ",
                   "scale": {
                     "type": "quantitative"
                   }
                 },
                 "color": {
                   "fieldName": "policy_domain",
-                  "displayName": "policy_domain",
                   "scale": {
                     "type": "categorical"
                   }
+                },
+                "label": {
+                  "show": true
                 }
               },
               "data": {
