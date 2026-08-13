@@ -3,7 +3,6 @@
 ### AI-Native Banking Compliance Intelligence · Databricks · Delta Lake · Unity Catalog · AI/BI · Genie
 
 <div align="center">
-  
 ![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white)
 ![Delta
 Lake](https://img.shields.io/badge/Delta%20Lake-003366?style=for-the-badge&logo=delta&logoColor=white)
@@ -13,7 +12,6 @@ Catalog](https://img.shields.io/badge/Unity%20Catalog-FF3621?style=for-the-badge
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![OpenAI Agents
 SDK](https://img.shields.io/badge/OpenAI%20Agents%20SDK-412991?style=for-the-badge&logo=openai&logoColor=white)
-
 </div>
 
 ------------------------------------------------------------------------
